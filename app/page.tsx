@@ -46,7 +46,7 @@ export default function Home() {
         hubMsg,
         "my-hub",
         {
-          amount: [{ amount: "1", denom: "uxion" }],
+          amount: [{ amount: "0", denom: "uxion" }],
           gas: "500000",
         }
       );
