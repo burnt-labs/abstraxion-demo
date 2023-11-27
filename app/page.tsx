@@ -15,7 +15,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const createHouse = async () => {
+  const instantiateTestContract = async () => {
     setLoading(true);
     try {
       if (!client) {
@@ -78,10 +78,10 @@ export default function Home() {
         <button
           disabled={loading}
           className="bg-white px-4 py-2 rounded text-black w-full"
-          onClick={createHouse}
+          onClick={instantiateTestContract}
         >
-          {loading ? "LOADING..." : "CREATE XION HOUSE"}
-        </button>
+          {loading ? "LOADING..." : "INSTANTIATE TEST CONTRACT"}
+        </button>)}
       </div>
       <Abstraxion onClose={() => setIsOpen(false)} isOpen={isOpen} />
     </main>
