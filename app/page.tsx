@@ -75,6 +75,7 @@ export default function Home() {
             "CONNECT"
           )}
         </button>
+        {client && (
         <button
           disabled={loading}
           className="bg-white px-4 py-2 rounded text-black w-full"
