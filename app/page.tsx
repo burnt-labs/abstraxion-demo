@@ -5,6 +5,8 @@ import {
   useAbstraxionAccount,
   useAbstraxionSigningClient,
 } from "@burnt-labs/abstraxion";
+import TXSuccessModal from "@/components/modal";
+import {InstantiateResult} from "@cosmjs/cosmwasm-stargate";
 
 export default function Home() {
   // Abstraxion hooks
@@ -14,6 +16,8 @@ export default function Home() {
   // General state hooks
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [initiateResult, setInitiateResult] = useState<InstantiateResult | null>(null);
+  const [txSuccessModalOpen, setTxSuccessModalOpen] = useState(false);
 
   const instantiateTestContract = async () => {
     setLoading(true);
@@ -22,7 +26,7 @@ export default function Home() {
         setIsOpen(true);
         return;
       }
-      const hubMsg = {
+      const initMsg = {
         metadata: {
           metadata: {
             name: "Abstraxion House",
@@ -43,14 +47,15 @@ export default function Home() {
       const hubResult = await client.instantiate(
         account?.bech32Address || "",
         1,
-        hubMsg,
+        initMsg,
         "my-hub",
         {
           amount: [{ amount: "0", denom: "uxion" }],
           gas: "500000",
         }
       );
-      console.log("Instantiate result", hubResult);
+      setInitiateResult(hubResult);
+      setTxSuccessModalOpen(true);
     } catch (error) {
       console.log(error);
     } finally {
@@ -85,6 +90,7 @@ export default function Home() {
         </button>)}
       </div>
       <Abstraxion onClose={() => setIsOpen(false)} isOpen={isOpen} />
+      <TXSuccessModal isOpen={txSuccessModalOpen} onClose={() => setTxSuccessModalOpen(false)} initiateResult={initiateResult} />
     </main>
   );
 }
